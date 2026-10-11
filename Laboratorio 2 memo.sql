@@ -1,3 +1,5 @@
+-- Ejecutarlo antes de la carga con Node.js. La verificación de la carga está al final del archivo. Recordar que este script elimina y recrea la base streamer_database.
+
 DROP DATABASE IF EXISTS streamer_database;
 CREATE DATABASE streamer_database;
 
