@@ -1,4 +1,4 @@
-# Laboratorio N.º 4: Modelado y análisis de datos con SQL
+# Laboratorio Nº 2: Modelado y análisis de datos con SQL
 
 Universidad de San Buenaventura, Ingeniería Multimedia, Bogotá.
 
