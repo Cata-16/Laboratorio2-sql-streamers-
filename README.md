@@ -28,13 +28,13 @@ completa está en el informe.
 
 ## Estructura del repositorio
 ```
-├── data/Streamers.csv               Conjunto de datos de origen
-├── env/mysqlConfig.example.js       Plantilla de configuración
-├── services/mysql.service.js        Conexión a MySQL
-├── load/                            Scripts de carga (uno por tabla)
-├── sql/01_schema.sql                Script DDL
-├── sql/02_consultas_basicas.sql     4 consultas básicas
-└── sql/03_consultas_analisis.sql    4 consultas de análisis
+├── Laboratorio 2 memo.sql        Script DDL (esquema de 5 tablas) y verificación de la carga
+├── Consultas lab 2.sql           4 consultas básicas y 4 consultas de análisis
+└── intento de laboratorio/       Programa de carga en Node.js
+    ├── data/Streamers.csv        Conjunto de datos de origen
+    ├── env/                      Configuración de la conexión a MySQL
+    ├── services/mysql.service.js Conexión a MySQL
+    └── load/                     Scripts de carga (uno por tabla)
 ```
 
 ## Requisitos
@@ -42,12 +42,16 @@ completa está en el informe.
 - MySQL 8.0 o superior (la consulta 2b usa funciones de ventana)
 
 ## Ejecución
-1. Instalar dependencias: `npm install`
-2. Copiar `env/mysqlConfig.example.js` como `env/mysqlConfig.js` y escribir el
-   usuario y la contraseña de MySQL.
-3. Ejecutar `sql/01_schema.sql` en MySQL Workbench. Este script elimina y
-   recrea la base `streamer_database`.
-4. Desde la raíz del proyecto, ejecutar en este orden:
+1. Ejecutar `Laboratorio 2 memo.sql` en MySQL Workbench (hasta antes de la
+   sección de verificación). Este script elimina y recrea la base
+   `streamer_database`, por lo que debe ejecutarse **antes** de la carga y
+   nunca después.
+2. Entrar a la carpeta del proyecto: `cd "intento de laboratorio"`
+3. Instalar dependencias: `npm install`
+4. Configurar la conexión en `env/mysqlConfig.js` con el usuario y la
+   contraseña de MySQL (`host`, `user`, `password` y `database:
+   'streamer_database'`).
+5. Ejecutar en este orden:
 ```
    node load/load.language.js
    node load/load.game.js
@@ -55,21 +59,23 @@ completa está en el informe.
    node load/load.streamer_statistics.js
    node load/load.streamer_game.js
 ```
-5. Verificar la carga. Resultado esperado: `language` 19, `game` 211,
-   `streamer` 999, `streamer_statistics` 999 y `streamer_game` 1921.
-6. Ejecutar las consultas de `sql/02_consultas_basicas.sql` y
-   `sql/03_consultas_analisis.sql`.
+6. Verificar la carga con la consulta del final de `Laboratorio 2 memo.sql`.
+   Resultado esperado: `language` 19, `game` 211, `streamer` 999,
+   `streamer_statistics` 999 y `streamer_game` 1921.
+7. Ejecutar las consultas de `Consultas lab 2.sql` en MySQL Workbench.
 
 ## Consultas
-**Básicas:** filtrado con dos condiciones, JOIN de dos tablas, JOIN de tres
-tablas y agregación con `GROUP BY`.
+**Básicas (1.1 a 1.4):** filtrado con dos condiciones, JOIN de dos tablas,
+JOIN de tres tablas y agregación con `GROUP BY`.
 
 **Análisis (dataset Streamers.csv):**
-1. Juego más frecuente como transmisión principal y como segunda opción.
-2. Idioma con mayor promedio de seguidores por streamer (con consulta
-   complementaria de mediana).
+1. Juego más frecuente como transmisión principal y como segunda opción
+   (consultas 1A y 1B).
+2. Idioma con mayor promedio de seguidores por streamer, con una consulta
+   complementaria de mediana (consultas 2 y 2B).
 3. Juegos que son principales de unos streamers y secundarios de otros.
-4. Audiencia promedio por rango de días activos por semana.
+4. Audiencia promedio por rango de días activos por semana, con y sin
+   registros de audiencia cero (consultas 4A y 4B).
 
 ## Notas sobre los datos
 - 77 streamers no tienen juego secundario.
